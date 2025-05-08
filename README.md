@@ -1,7 +1,4 @@
-# Repositório criado para armazenar os códigos do Trabalho de Conclusão de Curso do MBA de Data Science e Analytics da USP & ESALQ
-
-![image](https://github.com/user-attachments/assets/e1dd42db-e2b6-4910-a3b2-7e545fb949e5)
-
+## Repositório destinado ao armazenamento do Trabalho de Conclusão de Curso do MBA em Data Science e Analytics da USP/ESALQ
 ## ACMR: AI de Consulta de Medicamentos da RENAME
 
 Me. Nathalia Adriele de Lima
@@ -48,6 +45,8 @@ Investigar e validar a eficácia de sistemas RAG no domínio da saúde pública,
 6. Avaliação com framework RAGAS usando métricas padronizadas
 
 ### Resultados
+
+![image](https://github.com/user-attachments/assets/e1dd42db-e2b6-4910-a3b2-7e545fb949e5)
 
 O sistema obteve altos níveis de precisão e recall de contexto (acima de 85%), fidelidade factual consistente e relevância aceitável das respostas. A abordagem se mostrou promissora para sistemas de consulta médica sensível baseada em IA generativa, destacando a importância de curadoria humana e refinamento contínuo.
 
