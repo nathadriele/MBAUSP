@@ -1,55 +1,119 @@
-## Repositório destinado ao armazenamento do Trabalho de Conclusão de Curso do MBA em Data Science e Analytics da USP/ESALQ
-## ACMR: AI de Consulta de Medicamentos da RENAME
+# ACMR – IA de Consulta de Medicamentos da RENAME
 
-Me. Nathalia Adriele de Lima
+Trabalho de Conclusão de Curso – MBA USP/ESALQ (Data Science & Analytics)  •  Domínio: Saúde Pública / Medicamentos Essenciais  •  Última atualização: maio 2025
 
-Orientador.: Dr. Felipe Pinto da Silva
+## Visão Geral
 
-[RAG Avaliacao de um sistema de recuperacao da informação de medicamentos.pdf](https://github.com/user-attachments/files/20104570/RAG.Avaliacao.de.um.sistema.de.recuperacao.da.informacao.de.medicamentos.pdf)
+ACMR é um protótipo de Generation‑Augmented Retrieval (RAG) que responde perguntas sobre os 534 medicamentos presentes na Relação Nacional de Medicamentos Essenciais (RENAME) do SUS, combinando LLMs de código aberto com busca vetorial para oferecer respostas rápidas, contextualizadas e transparentes. O pipeline captura o PDF oficial da RENAME, extrai, limpa e fragmenta o texto, gera vetores semânticos e disponibiliza consulta via chat construído em Streamlit.
 
-![image](https://github.com/user-attachments/assets/8ec12d96-d1ef-4a06-ab96-1d0644b9ee2a)
+![image](https://github.com/user-attachments/assets/b0428587-0cb8-4d39-afe7-7b830db93e8e)
 
+**Figura: Fluxograma de representação do sistema RAG de medicamentos RENAME.**
 
-### Resumo
+## Objetivos
 
-Este projeto de TCC apresenta o desenvolvimento do sistema ACMR – AI de Consulta de Medicamentos RENAME, um protótipo baseado em LLMs e Retrieval-Augmented Generation (RAG) para responder dúvidas sobre medicamentos da lista RENAME, usada pelo SUS. A base de dados foi processada, vetorizada e conectada a uma arquitetura com LangChain, Pinecone e Groq APIs, possibilitando buscas semânticas com contextualização e precisão. A avaliação do sistema foi feita por meio do framework RAGAS, utilizando métricas como fidelidade, relevância da resposta, recall de contexto e precisão de contexto.
+1. Investigar a eficácia de arquiteturas RAG na recuperação de informações médicas não estruturadas.
 
-### Abstract
+2. Facilitar o acesso de pacientes, estudantes e profissionais a dados críticos de medicamentos, reduzindo barreiras do documento PDF extenso e semiestruturado.
 
-This final project presents the development of ACMR – AI for RENAME Medication Queries, a prototype based on LLMs and Retrieval-Augmented Generation (RAG) for answering questions about medications listed in Brazil’s essential medicine list (RENAME). The dataset was structured and vectorized, and the system was built using LangChain, Pinecone, and Groq APIs to enable semantic, contextualized queries. Evaluation was conducted using the RAGAS framework, focusing on faithfulness, answer relevance, context recall, and context precision.
+3. Avaliar o sistema com o framework RAGAS, usando as métricas context_precision, context_recall, faithfulness e answer_relevancy.
 
-### Objetivo
+## Tecnologias Principais
 
-Investigar e validar a eficácia de sistemas RAG no domínio da saúde pública, promovendo acesso rápido e contextualizado a informações críticas sobre medicamentos essenciais. A aplicação visa mitigar falhas comuns de acesso em documentos extensos e semiestruturados (ex: PDF da RENAME).
-
-### Tecnologias Utilizadas
-
-| Categoria       | Ferramentas                       |
+| Camadas       | Ferramentas                       |
 | --------------- | --------------------------------- |
-| LLMs            | Mixtral-8x7B, Gemma-2-9B, LLaMA 3 |
+| Modelos de Linguagem            | Mixtral‑8x7B · Gemma‑2‑9B · Llama 3 |
 | Embeddings      | all-MiniLM-L6-v2                  |
-| Frameworks      | LangChain, RAGAS                  |
-| Vetores         | Pinecone                          |
-| API de LLM      | Groq                              |
+| Banco Vetorial      | LangChain, RAGAS                  |
+| Frameworks         | Pinecone                          |
+| API de Inferência   | Groq Cloud APIs                  |
 | Interface       | Streamlit                         |
 | Armazenamento   | PostgreSQL                        |
-| Desenvolvimento | Python, Jupyter, VSCode, Colab    |
+| Ambiente de Dev | Python 3.10 · VS Code · Jupyter/Colab   |
 
-### Metodologia (Resumo das Etapas)
+## Pipeline de Cinco Etapas
 
-1. Aquisição e estruturação da base RENAME
-2. Limpeza, chunking e vetorização dos textos
-3. Criação do índice vetorial e integração via Pinecone
-4. Desenvolvimento do sistema ACMR em Python/Streamlit
-5. Integração com LLMs e APIs de inferência
-6. Avaliação com framework RAGAS usando métricas padronizadas
+1. **Formação do dataset:** obtenção e organização do PDF RENAME.
 
-### Resultados
+2. **Limpeza & padronização:** revisão de textos e normalização de bulas e lista.
 
-![image](https://github.com/user-attachments/assets/e1dd42db-e2b6-4910-a3b2-7e545fb949e5)
+3. **Vetorização & armazenamento:** criação de ~16 k chunks e indexação com métrica de cosseno no Pinecone.
 
-O sistema obteve altos níveis de precisão e recall de contexto (acima de 85%), fidelidade factual consistente e relevância aceitável das respostas. A abordagem se mostrou promissora para sistemas de consulta médica sensível baseada em IA generativa, destacando a importância de curadoria humana e refinamento contínuo.
+4. **Recuperação & geração:** montagem do fluxo LangChain que reformula perguntas (Gemma‑2‑9B), recupera contexto e gera respostas (Mixtral‑8x7B).
 
-![image](https://github.com/user-attachments/assets/6dc476ff-8be9-442c-94e4-05e596374197)
+5. **Avaliação:** aplicação do RAGAS sobre conjunto sintético de perguntas/respostas.
 
+## Resultados de Avaliação
 
+| Métrica       | Pontuação Média                       |
+| --------------- | --------------------------------- |
+| Precisão do Contexto | 0,93 |
+| Recall do Contexto | 0,87 |
+| Fidelidade | 0,83 |
+| Relevância da Resposta | 0,63 |
+
+As métricas indicam alta precisão e recall de contexto, sugerindo boa capacidade de localizar trechos relevantes. A fidelidade mantém consistência factual; já a relevância das respostas revela espaço para refinamentos no modelo gerador.
+
+![image](https://github.com/user-attachments/assets/8e9bfb82-f504-4403-9af0-7642a90f4b86)
+
+**Figura: Avaliação das métricas para várias perguntas geradas no sistema.**
+
+## Como Executar Localmente
+
+### 1. Clone o repositório
+```
+$ git clone git@github.com:nathadriele/acmr-rag-rename-mbausp.git
+```
+
+### 2. Crie o ambiente
+```
+$ python -m venv .venv && source .venv/bin/activate
+```
+
+```
+$ pip install -r requirements.txt
+```
+
+### 3. Configure suas credenciais
+```
+$ export PINECONE_API_KEY=SEU_TOKEN
+```
+
+```
+$ export GROQ_API_KEY=SEU_TOKEN
+```
+
+### 4. Execute a interface
+
+![image](https://github.com/user-attachments/assets/931db66c-19f5-49d0-a72e-07843d4b7683)
+
+**Figura: Interface de usuário do sistema de consulta de medicamentos RENAME.**
+
+--------------------------------------------------------
+
+![image](https://github.com/user-attachments/assets/9b03e901-850b-4850-841f-970670767a4c)
+
+**Figura: Interface do usuário com pergunta, reformulação da pergunta e resposta.**
+
+```
+$ streamlit run src/app_streamlit.py
+```
+
+Obs: a primeira execução fará a vetorização e pode levar alguns minutos.
+
+## Autoria & Orientação
+
+Me. Nathalia Adriele de Lima – MBA em Data Science & Analytics, USP/ESALQ
+
+Dr. Felipe Pinto da Silva – Orientador
+
+**Caso utilize este trabalho em pesquisas acadêmicas, cite da seguinte forma:**
+
+```
+@misc{lima2024rag,
+  title  = {RAG: Avaliação de um sistema de recuperação da informação de medicamentos RENAME baseado em LLMs},
+  author = {Lima, Nathalia Adriele de and Silva, Felipe Pinto da},
+  year   = {2024},
+  note   = {MBA USP/ESALQ, Trabalho de Conclusão de Curso}
+}
+```
